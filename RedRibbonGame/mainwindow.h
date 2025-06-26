@@ -2,6 +2,11 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "muros.h"
+#include <QGraphicsScene>
+#include <QList>
+#include <fstream>
+#include <iostream>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -19,5 +24,9 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    QGraphicsScene *scene;
+    short x,y,ancho,alto;
+    QList <Muros*>muros;
+    void cargarMuros(const QString& nombreArchivo);
 };
 #endif // MAINWINDOW_H

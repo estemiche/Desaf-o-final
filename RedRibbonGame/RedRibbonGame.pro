@@ -10,10 +10,12 @@ CONFIG += c++17
 
 SOURCES += \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    muros.cpp
 
 HEADERS += \
-    mainwindow.h
+    mainwindow.h \
+    muros.h
 
 FORMS += \
     mainwindow.ui
@@ -22,3 +24,9 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    Sprites.qrc
+
+DISTFILES += \
+    build/Desktop_Qt_6_7_3_MinGW_64_bit-Debug/Muros.txt
