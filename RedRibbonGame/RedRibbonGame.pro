@@ -11,11 +11,15 @@ CONFIG += c++17
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
-    muros.cpp
+    muros.cpp \
+    obstaculos.cpp \
+    personajes.cpp
 
 HEADERS += \
     mainwindow.h \
-    muros.h
+    muros.h \
+    obstaculos.h \
+    personajes.h
 
 FORMS += \
     mainwindow.ui
@@ -29,4 +33,6 @@ RESOURCES += \
     Sprites.qrc
 
 DISTFILES += \
-    build/Desktop_Qt_6_7_3_MinGW_64_bit-Debug/Muros.txt
+    build/Desktop_Qt_6_7_3_MinGW_64_bit-Debug/Nivel1.txt \
+    build/Desktop_Qt_6_7_3_MinGW_64_bit-Debug/Obstaculos.txt \
+    build/Desktop_Qt_6_7_3_MinGW_64_bit-Debug/Personajes.txt
