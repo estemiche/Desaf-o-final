@@ -12,12 +12,14 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     muros.cpp \
+    nivel.cpp \
     obstaculos.cpp \
     personajes.cpp
 
 HEADERS += \
     mainwindow.h \
     muros.h \
+    nivel.h \
     obstaculos.h \
     personajes.h
 
@@ -33,6 +35,7 @@ RESOURCES += \
     Sprites.qrc
 
 DISTFILES += \
+    build/Desktop_Qt_6_7_3_MinGW_64_bit-Debug/Nivel.txt \
     build/Desktop_Qt_6_7_3_MinGW_64_bit-Debug/Nivel1.txt \
     build/Desktop_Qt_6_7_3_MinGW_64_bit-Debug/Obstaculos.txt \
     build/Desktop_Qt_6_7_3_MinGW_64_bit-Debug/Personajes.txt

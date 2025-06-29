@@ -6,15 +6,19 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    x=0;
-    y=0;
-    ancho=900;
-    alto=900;
-    scene=new QGraphicsScene(x,y,ancho,alto);
-    ui->graphicsView->setScene(scene);
+    scene1=new QGraphicsScene(0,0,900,750);
+    ui->graphicsView->setScene(scene1);
+    scene1->setBackgroundBrush(Qt::black);
+    niveles=new Nivel();
+    goku=new Personajes;
+    scene1->addItem(niveles);
+    niveles->setPos(720,80);
+    scene1->addItem(goku);
+    goku->setPos(430,630);
     cargarMuros("Nivel1.txt");
     cargarObjetos("Obstaculos.txt");
     cargarPersonajes("Personajes.txt");
+    cargarCorazones("Nivel.txt");
 }
 void MainWindow::cargarMuros(const QString& nombreArchivo)
 {
@@ -25,7 +29,7 @@ void MainWindow::cargarMuros(const QString& nombreArchivo)
     short x,y,w,h;
     while (archivo>>x>>y>>w>>h){
         muros.append(new Muros(x,y,w,h));
-        scene->addItem(muros.back());
+        scene1->addItem(muros.back());
     }
     archivo.close();
 }
@@ -39,7 +43,7 @@ void MainWindow::cargarObjetos(const QString &nombreArchivo)
     short x,y,posx,posy,w,h;
     while (archivo>>x>>y>>posx>>posy>>w>>h){
         obstaculos.append(new Obstaculos(x,y,posx,posy,w,h));
-        scene->addItem(obstaculos.back());
+        scene1->addItem(obstaculos.back());
     }
     archivo.close();
 }
@@ -53,9 +57,33 @@ void MainWindow::cargarPersonajes(const QString &nombreArchivo)
     short x,y,posx,posy,w,h;
     while (archivo>>x>>y>>posx>>posy>>w>>h){
         personajes.append(new Personajes(x,y,posx,posy,w,h));
-        scene->addItem(personajes.back());
+        scene1->addItem(personajes.back());
     }
     archivo.close();
+}
+
+void MainWindow::cargarCorazones(const QString &nombreArchivo)
+{
+    std::ifstream archivo(nombreArchivo.toStdString());
+    if(!archivo.is_open()){
+        std::cerr<<"El archivo no abrio";
+    }
+    short x,y,posx,posy,w,h;
+    while(archivo>>x>>y>>posx>>posy>>w>>h){
+        corazones.append(new Nivel(x,y,posx,posy,w,h));
+        scene1->addItem(corazones.back());
+    }
+    archivo.close();
+}
+
+bool MainWindow::evaluarColision()
+{
+    for(int i=0;i<muros.count();i++){
+        if(goku->collidesWithItem(muros[i])){
+            return true;
+        }
+    }
+    return false;
 }
 
 MainWindow::~MainWindow()
@@ -66,16 +94,29 @@ MainWindow::~MainWindow()
 void MainWindow::keyPressEvent(QKeyEvent *event)
 {
     if(event->key()==Qt::Key_W){
-        personajes[0]->moverUp();
+        goku->moverUp();
+        if(evaluarColision()){
+            goku->moverDown();
+        }
     }
     else if (event->key()==Qt::Key_S){
-        personajes[0]->moverDown();
-    }
+        goku->moverDown();
+        if(evaluarColision()){
+            goku->moverUp();
+        }
+        }
     else if (event->key()==Qt::Key_D){
-        personajes[0]->moverRight();
+        goku->moverRight();
+        if(evaluarColision()){
+            goku->moverLeft();
     }
+        }
     else if (event->key()==Qt::Key_A){
-        personajes[0]->moverLeft();
+        goku->moverLeft();
+        if(evaluarColision()){
+            goku->moverRight();
     }
+        }
 }
+
 
