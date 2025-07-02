@@ -11,6 +11,7 @@
 #include "personajes.h"
 #include <QKeyEvent>
 #include "nivel.h"
+#include <QTimer>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -27,6 +28,7 @@ public:
     ~MainWindow();
 private slots:
     void keyPressEvent(QKeyEvent *event);
+    void disparo();
 private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene1;
@@ -35,12 +37,14 @@ private:
     QList <Obstaculos*>obstaculos;
     QList <Personajes*>personajes;
     QList <Nivel*>corazones;
+    QTimer *timer;
     Nivel *niveles;
     Personajes *goku;
     void cargarMuros(const QString& nombreArchivo);
     void cargarObjetos(const QString& nombreArchivo);
     void cargarPersonajes(const QString& nombreArchivo);
     void cargarCorazones(const QString& nombreArchivo);
-    bool evaluarColision();
+    bool evaluarColisionGokuMuros();
+    bool evaluarColisionGokuObstaculos();
 };
 #endif // MAINWINDOW_H

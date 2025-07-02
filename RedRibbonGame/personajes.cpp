@@ -6,7 +6,7 @@ Personajes::Personajes(QObject *parent)
     x=0;
     y=0;
     posx=430;
-    posy=694;
+    posy=630;
     ancho=25;
     alto=43;
     vel=2;
@@ -14,6 +14,7 @@ Personajes::Personajes(QObject *parent)
     timer=new QTimer();
     timer->start(800);
     connect(timer,&QTimer::timeout,this,&Personajes::renewGoku);
+    setPos(posx,posy);
 
 }
 
