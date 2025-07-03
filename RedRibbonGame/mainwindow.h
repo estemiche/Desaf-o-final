@@ -33,6 +33,7 @@ private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene1;
     short x,y,ancho,alto;
+    bool gokuInvulnerable;
     QList <Muros*>muros;
     QList <Obstaculos*>obstaculos;
     QList <Personajes*>personajes;
@@ -46,5 +47,6 @@ private:
     void cargarCorazones(const QString& nombreArchivo);
     bool evaluarColisionGokuMuros();
     bool evaluarColisionGokuObstaculos();
+    void energia();
 };
 #endif // MAINWINDOW_H

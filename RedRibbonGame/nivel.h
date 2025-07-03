@@ -5,6 +5,7 @@
 #include <QGraphicsItem>
 #include <QPainter>
 #include <QPixmap>
+#include <QTimer>
 
 class Nivel : public QObject, public QGraphicsItem
 {
@@ -15,11 +16,14 @@ public:
     Nivel(short x,short y,short posx,short posy,short ancho,short alto);
     short x,y,posx,posy,ancho,alto;
     short energia,vida,damage;
+    QTimer *timer;
     QPixmap *sprite;
     QRectF boundingRect()const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    void cambiaEnergia();
 
 signals:
+
 };
 
 #endif // NIVEL_H

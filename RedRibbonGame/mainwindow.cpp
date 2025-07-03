@@ -21,6 +21,7 @@ MainWindow::MainWindow(QWidget *parent)
     cargarObjetos("Obstaculos.txt");
     cargarPersonajes("Personajes.txt");
     cargarCorazones("Nivel.txt");
+    gokuInvulnerable=false;
 }
 void MainWindow::cargarMuros(const QString& nombreArchivo)
 {
@@ -91,7 +92,7 @@ bool MainWindow::evaluarColisionGokuMuros()
 bool MainWindow::evaluarColisionGokuObstaculos()
 {
     for(int i = 0;i<obstaculos.count();++i){
-        if(goku->collidesWithItem(obstaculos[i]))
+        if(goku->collidesWithItem(obstaculos[i]) || obstaculos[i]->collidesWithItem(goku))
             return true;
     }
     return false;
@@ -107,6 +108,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         }
         if(evaluarColisionGokuObstaculos()){
             goku->moverDown();
+            energia();
         }
     }
     else if (event->key()==Qt::Key_S){
@@ -116,6 +118,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         }
         if(evaluarColisionGokuObstaculos()){
             goku->moverUp();
+            energia();
         }
     }
     else if (event->key()==Qt::Key_D){
@@ -126,6 +129,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         }
         if(evaluarColisionGokuObstaculos()){
             goku->moverLeft();
+            energia();
         }
     }
     else if (event->key()==Qt::Key_A){
@@ -136,6 +140,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         }
         if(evaluarColisionGokuObstaculos()){
             goku->moverRight();
+            energia();
         }
     }
 }
@@ -203,8 +208,35 @@ void MainWindow::disparo()
         obstaculos[14]->posx=530;
         obstaculos[14]->posy=500;
     }
+    if(evaluarColisionGokuObstaculos()){
+        energia();
+    }
 }
 
+void MainWindow::energia()
+{
+    if(gokuInvulnerable) return;
+    goku->energia-=20;
+    goku->setOpacity(1);
+    niveles->cambiaEnergia();
+    if(goku->energia==0){
+            scene1->removeItem(corazones.last());
+            corazones.pop_back();
+            goku->energia=100;
+        }
+    if(corazones.empty()){
+        scene1->setBackgroundBrush(Qt::red);
+        scene1->addText("GAME OVER");
+        scene1->removeItem(niveles);
+        delete niveles;
+    }
+    gokuInvulnerable=true;
+    goku->setOpacity(0.5);
+    QTimer::singleShot(2000,this,[=](){
+        gokuInvulnerable=false;
+        goku->setOpacity(1.0);
+    });
+}
 MainWindow::~MainWindow()
 {
     delete ui;

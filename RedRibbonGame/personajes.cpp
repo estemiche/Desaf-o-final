@@ -10,6 +10,7 @@ Personajes::Personajes(QObject *parent)
     ancho=25;
     alto=43;
     vel=2;
+    energia=100;
     sprite=new QPixmap(":/imagenes/SpritesaUsar.png");
     timer=new QTimer();
     timer->start(800);

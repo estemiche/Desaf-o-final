@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>imagenes/SpritesaUsar.png</file>
+        <file>imagenes/SpritesaUsar1.png</file>
     </qresource>
 </RCC>

@@ -15,7 +15,7 @@ public:
     explicit Personajes(QObject *parent = nullptr);
     QTimer *timer;
     Personajes(short x,short y,short posx,short posy,short ancho,short alto);
-    short x,y,posx,posy,ancho,alto,vel;
+    short x,y,posx,posy,ancho,alto,vel,energia;
     QRectF boundingRect()const;
     QPixmap *sprite;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
