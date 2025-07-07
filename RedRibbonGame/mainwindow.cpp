@@ -12,7 +12,10 @@ MainWindow::MainWindow(QWidget *parent)
     timer=new QTimer();
     timer->start(200);
     connect(timer,&QTimer::timeout,this,&MainWindow::disparo);
-    niveles=new Nivel();
+    timer1=new QTimer();
+    timer1->start(200);
+    connect(timer1,&QTimer::timeout,this,&MainWindow::animarSoldados);
+    niveles=new Nivel;
     goku=new Personajes;
     scene1->addItem(niveles);
     niveles->setPos(720,80);
@@ -102,93 +105,70 @@ bool MainWindow::evaluarColisionGokuObstaculos()
 void MainWindow::keyPressEvent(QKeyEvent *event)
 {
     if(event->key()==Qt::Key_W){
+        goku->restablecerGoku();
         goku->moverUp();
         if(evaluarColisionGokuMuros()){
             goku->moverDown();
         }
         if(evaluarColisionGokuObstaculos()){
-            goku->moverDown();
             energia();
         }
     }
     else if (event->key()==Qt::Key_S){
+        goku->restablecerGoku();
         goku->moverDown();
         if(evaluarColisionGokuMuros()){
             goku->moverUp();
         }
         if(evaluarColisionGokuObstaculos()){
-            goku->moverUp();
             energia();
         }
     }
     else if (event->key()==Qt::Key_D){
+        goku->restablecerGoku();
         goku->moverRight();
 
         if(evaluarColisionGokuMuros()){
             goku->moverLeft();
         }
         if(evaluarColisionGokuObstaculos()){
-            goku->moverLeft();
             energia();
         }
     }
     else if (event->key()==Qt::Key_A){
+        goku->restablecerGoku();
         goku->moverLeft();
 
         if(evaluarColisionGokuMuros()){
             goku->moverRight();
         }
         if(evaluarColisionGokuObstaculos()){
-            goku->moverRight();
             energia();
         }
+    }
+    else if(event->key()==Qt::Key_Z){
+        goku->sacarPoderLeft();
+        energiaSoldados();
+    }
+    else if(event->key()==Qt::Key_X){
+        goku->restablecerGoku();
+        goku->sacarPoderRight();
+        energiaSoldados();
+    }
+    else if(event->key()==Qt::Key_Q){
+        goku->sacarPoderUp();
+        energiaSoldados();
     }
 }
 
 
 void MainWindow::disparo()
 {
-   obstaculos[3]->moverRight();
-    if(obstaculos[3]->posx>450){
-       obstaculos[3]->posx=260;
-    }
-   obstaculos[4]->moverLeft();
-    if(obstaculos[4]->posx<490){
-       obstaculos[4]->posx=630;
-    }
-    obstaculos[5]->moverDown();
-    if(obstaculos[5]->posy>600){
-        obstaculos[5]->posy=450;
-    }
-    obstaculos[6]->moverDown();
-    if(obstaculos[6]->posy>600){
-        obstaculos[6]->posy=450;
-    }
-    obstaculos[7]->moverRight();
-    if(obstaculos[7]->posx>380){
-        obstaculos[7]->posx=230;
-    }
-    obstaculos[8]->moverLeft();
-    if(obstaculos[8]->posx<460){
-        obstaculos[8]->posx=610;
-    }
-    obstaculos[9]->moverRight();
-    obstaculos[9]->moverDown();
-    if(obstaculos[9]->posx>480){
-       obstaculos[9]->posx=330;
-        obstaculos[9]->posy=200;
-    }
-    obstaculos[10]->moverLeft();
-    obstaculos[10]->moverDown();
-    if(obstaculos[10]->posx<410){
-        obstaculos[10]->posx=560;
-        obstaculos[10]->posy=210;
-    }
-    obstaculos[2]->moverLeft();
-    obstaculos[2]->moverDown();
-    if(obstaculos[2]->posx<460){
-        obstaculos[2]->posx=710;
-        obstaculos[2]->posy=410;
+    obstaculos[0]->moverLeft();
+    obstaculos[0]->moverDown();
+    if(obstaculos[0]->posx<460){
+        obstaculos[0]->posx=710;
+        obstaculos[0]->posy=410;
     }
     obstaculos[1]->moverRight();
     obstaculos[1]->moverDown();
@@ -196,21 +176,45 @@ void MainWindow::disparo()
         obstaculos[1]->posx=175;
         obstaculos[1]->posy=410;
     }
-    obstaculos[13]->moverRight();
-    obstaculos[13]->moverUp();
-    if(obstaculos[13]->posx>410){
-        obstaculos[13]->posx=320;
-        obstaculos[13]->posy=500;
+    obstaculos[5]->moverRight();
+    obstaculos[5]->moverUp();
+    if(obstaculos[5]->posx>410){
+        obstaculos[5]->posx=320;
+        obstaculos[5]->posy=500;
     }
-    obstaculos[14]->moverLeft();
-    obstaculos[14]->moverUp();
-    if(obstaculos[14]->posx<430){
-        obstaculos[14]->posx=530;
-        obstaculos[14]->posy=500;
+    obstaculos[4]->moverLeft();
+    obstaculos[4]->moverUp();
+    if(obstaculos[4]->posx<430){
+        obstaculos[4]->posx=530;
+        obstaculos[4]->posy=500;
     }
     if(evaluarColisionGokuObstaculos()){
         energia();
     }
+}
+
+void MainWindow::animarSoldados()
+{
+ for (int i = 0; i < personajes.count(); ++i) {
+        if(personajes[i]->x==0 && personajes[i]->y==85){
+            personajes[i]->x=27;
+            personajes[i]->y=85;
+        }
+        if(personajes[i]->x==28 && personajes[i]->y==85){
+            personajes[i]->x=0;
+            personajes[i]->y=85;
+        }
+        if (personajes[i]->x==53 && personajes[i]->y==85){
+            personajes[i]->x=81;
+            personajes[i]->y=85;
+        }
+
+        if(personajes[i]->x==81 && personajes[i]->y==85){
+            personajes[i]->x=53;
+            personajes[i]->y=85;
+        }
+        personajes[i]->update();
+ }
 }
 
 void MainWindow::energia()
@@ -219,7 +223,7 @@ void MainWindow::energia()
     goku->energia-=20;
     goku->setOpacity(1);
     niveles->cambiaEnergia();
-    if(goku->energia==0){
+    if(goku->energia==0 &&!corazones.empty()){
             scene1->removeItem(corazones.last());
             corazones.pop_back();
             goku->energia=100;
@@ -236,6 +240,28 @@ void MainWindow::energia()
         gokuInvulnerable=false;
         goku->setOpacity(1.0);
     });
+}
+
+void MainWindow::energiaSoldados()
+{
+    for(int e = personajes.count() - 1; e >= 0; --e){
+        if(goku->collidesWithItem(personajes[e])){
+            personajes[e]->energia -= 50;
+            if(personajes[e]->energia <= 0){
+                scene1->removeItem(personajes[e]);
+                personajes.removeAt(e);
+            }
+        }
+    }
+
+    for (int i = 0; i<obstaculos.count();++i) {
+        if(goku->collidesWithItem(obstaculos[i])){
+            scene1->removeItem(obstaculos[i]);
+            obstaculos.removeAt(i);
+            i--;
+        }
+
+    }
 }
 MainWindow::~MainWindow()
 {

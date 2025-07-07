@@ -5,7 +5,6 @@
 #include <QGraphicsItem>
 #include <QPainter>
 #include <QPixmap>
-#include <QTimer>
 
 class Personajes : public QObject, public QGraphicsItem
 {
@@ -13,7 +12,6 @@ class Personajes : public QObject, public QGraphicsItem
     Q_INTERFACES(QGraphicsItem)
 public:
     explicit Personajes(QObject *parent = nullptr);
-    QTimer *timer;
     Personajes(short x,short y,short posx,short posy,short ancho,short alto);
     short x,y,posx,posy,ancho,alto,vel,energia;
     QRectF boundingRect()const;
@@ -23,10 +21,13 @@ public:
     void moverDown();
     void moverRight();
     void moverLeft();
+    void sacarPoderUp();
+    void sacarPoderLeft();
+    void sacarPoderRight();
+    void restablecerGoku();
 
 signals:
 public slots:
-    void renewGoku();
 };
 
 #endif // PERSONAJES_H

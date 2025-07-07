@@ -12,9 +12,6 @@ Personajes::Personajes(QObject *parent)
     vel=2;
     energia=100;
     sprite=new QPixmap(":/imagenes/SpritesaUsar.png");
-    timer=new QTimer();
-    timer->start(800);
-    connect(timer,&QTimer::timeout,this,&Personajes::renewGoku);
     setPos(posx,posy);
 
 }
@@ -31,15 +28,6 @@ Personajes::Personajes(short x, short y, short posx, short posy, short ancho, sh
     sprite=new QPixmap(":/imagenes/SpritesaUsar.png");
     setPos(posx,posy);
 }
-
-void Personajes::renewGoku()
-{
-    x+=ancho;
-    if (x>=ancho*2){
-        x=0;
-    }
-    this->update();
-}
 QRectF Personajes::boundingRect() const
 {
     return QRectF(0,0,ancho,alto);
@@ -54,8 +42,10 @@ void Personajes::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
 
 void Personajes::moverUp()
 {
+    x=0;
     posy=posy-vel;
     setPos(posx,posy);
+    update();
 
 }
 
@@ -90,5 +80,36 @@ void Personajes::moverLeft()
         x=ancho*6;
     }
     update();
+}
+
+void Personajes::sacarPoderUp()
+{
+    x=0;
+    y=45;
+    ancho=30;
+    update();
+}
+
+void Personajes::sacarPoderLeft()
+{
+    ancho=30;
+    x=ancho*3;
+    y=45;
+    update();
+}
+
+void Personajes::sacarPoderRight()
+{
+    ancho=30;
+    x=ancho*2;
+    y=45;
+    update();
+}
+
+void Personajes::restablecerGoku()
+{
+    x=0;
+    y=0;
+    ancho=25;
 }
 
