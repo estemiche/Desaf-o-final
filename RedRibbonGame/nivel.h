@@ -7,6 +7,8 @@
 #include <QPixmap>
 #include <QTimer>
 
+
+
 class Nivel : public QObject, public QGraphicsItem
 {
     Q_OBJECT
@@ -21,6 +23,8 @@ public:
     QRectF boundingRect()const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     void cambiaEnergia();
+
+
 
 signals:
 

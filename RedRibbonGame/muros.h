@@ -6,18 +6,19 @@
 #include <QPainter>
 #include <QPixmap>
 
-class Muros : public QObject, public QGraphicsItem
+class Muros : public QObject,public QGraphicsItem
 {
+
     Q_OBJECT
     Q_INTERFACES(QGraphicsItem)
+
 public:
     explicit Muros(QObject *parent = nullptr);
     Muros(short x,short y,short ancho,short alto);
     short posx,posy,x,y,ancho,alto;
-    QRectF boundingRect() const;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    QRectF boundingRect()const;
+    void paint(QPainter *painter,const QStyleOptionGraphicsItem *option,QWidget *widget);
     QPixmap *sprite;
-
 signals:
 };
 

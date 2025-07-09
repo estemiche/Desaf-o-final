@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>imagenes/SpritesaUsar.png</file>
-        <file>imagenes/SpritesaUsar1.png</file>
+        <file>../Momento2/SpritesaUsar.png</file>
     </qresource>
 </RCC>

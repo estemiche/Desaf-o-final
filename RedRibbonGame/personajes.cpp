@@ -8,15 +8,15 @@ Personajes::Personajes(QObject *parent)
     posx=430;
     posy=630;
     ancho=25;
-    alto=43;
-    vel=2;
+    alto=41;
+    vel=3;
     energia=100;
-    sprite=new QPixmap(":/imagenes/SpritesaUsar.png");
+    sprite=new QPixmap(":/Imagenes/SpritesaUsar.png");
     setPos(posx,posy);
 
 }
 
-Personajes::Personajes(short x, short y, short posx, short posy, short ancho, short alto)
+Personajes::Personajes(short x, short y, short posx, short posy, short ancho, short alto,short movimiento)
 {
     this->x=x;
     this->y=y;
@@ -25,9 +25,12 @@ Personajes::Personajes(short x, short y, short posx, short posy, short ancho, sh
     this->ancho=ancho;
     this->alto=alto;
     vel=2;
-    sprite=new QPixmap(":/imagenes/SpritesaUsar.png");
+    energia=100;
+    this->movimiento=movimiento;
+    sprite=new QPixmap(":/Imagenes/SpritesaUsar.png");
     setPos(posx,posy);
 }
+
 QRectF Personajes::boundingRect() const
 {
     return QRectF(0,0,ancho,alto);
@@ -45,7 +48,8 @@ void Personajes::moverUp()
     x=0;
     posy=posy-vel;
     setPos(posx,posy);
-    update();
+
+
 
 }
 
@@ -53,11 +57,13 @@ void Personajes::moverDown()
 {
     posy=posy+vel;
     setPos(posx,posy);
-    x+=50;
-    if(x>=100){
-        x=50;
+    x+=ancho*2;
+    if(x>=ancho*4){
+        x=ancho*2;
     }
     update();
+
+
 }
 
 void Personajes::moverRight()
@@ -112,4 +118,33 @@ void Personajes::restablecerGoku()
     y=0;
     ancho=25;
 }
+
+void Personajes::moverUpSold()
+{
+    posy=posy-vel;
+    setPos(posx,posy);
+}
+
+void Personajes::moverDownSold()
+{
+    posy=posy+vel;
+    setPos(posx,posy);
+}
+
+void Personajes::moverRightSold()
+{
+    posx=posx+vel;
+    setPos(posx,posy);
+}
+
+void Personajes::moverLeftSold()
+{
+    posx=posx-vel;
+    setPos(posx,posy);
+}
+
+
+
+
+
 

@@ -4,7 +4,7 @@ Obstaculos::Obstaculos(QObject *parent)
     : QObject{parent}
 {}
 
-Obstaculos::Obstaculos(short x, short y,short posx,short posy,short ancho,short alto)
+Obstaculos::Obstaculos(short x, short y,short posx, short posy, short ancho, short alto,short movimiento,Personajes *soldado)
 {
     this->x=x;
     this->y=y;
@@ -13,9 +13,13 @@ Obstaculos::Obstaculos(short x, short y,short posx,short posy,short ancho,short 
     this->ancho=ancho;
     this->alto=alto;
     vel=5;
+    this->soldado=soldado;
+    this->movimiento=movimiento;
+    sprite=new QPixmap(":/Imagenes/SpritesaUsar.png");
     setPos(posx,posy);
-    sprite=new QPixmap(":/imagenes/SpritesaUsar.png");
+
 }
+
 QRectF Obstaculos::boundingRect() const
 {
     return QRectF(0,0,ancho,alto);
@@ -26,6 +30,16 @@ void Obstaculos::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
     QRectF posicionSprite(x,y,ancho,alto);
     QRectF dibuja(0,0,ancho,alto);
     painter->drawPixmap(dibuja,*sprite,posicionSprite);
+}
+
+short Obstaculos::getterPosY()
+{
+    return posy;
+}
+
+short Obstaculos::getterPosX()
+{
+    return posx;
 }
 
 void Obstaculos::moverUp()
@@ -51,4 +65,5 @@ void Obstaculos::moverLeft()
     posx=posx-vel;
     setPos(posx,posy);
 }
+
 

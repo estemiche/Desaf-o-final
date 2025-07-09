@@ -12,9 +12,8 @@ Muros::Muros(short x, short y, short ancho, short alto)
     this->posy=0;
     this->ancho=ancho;
     this->alto=alto;
-    sprite= new QPixmap(":/imagenes/SpritesaUsar.png");
+    sprite= new QPixmap(":/Imagenes/SpritesaUsar.png");
     setPos(x,y);
-
 }
 
 QRectF Muros::boundingRect() const
@@ -28,3 +27,4 @@ void Muros::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
     QRectF dibuja(0,0,ancho,alto);
     painter->drawPixmap(dibuja,*sprite,posicionSprite);
 }
+

@@ -4,11 +4,13 @@ Nivel::Nivel(QObject *parent)
     : QObject{parent}
 {
     energia=100;
+    damage=0;
     x=0;
     y=0;
     ancho=100;
     alto=40;
-    sprite=new QPixmap(":/imagenes/SpritesaUsar1.png"); }
+    sprite= new QPixmap(":/Imagenes/SpritesaUsar1.png");
+}
 
 Nivel::Nivel(short x, short y,short posx,short posy,short ancho, short alto)
 {
@@ -18,9 +20,11 @@ Nivel::Nivel(short x, short y,short posx,short posy,short ancho, short alto)
     this->posy=posy;
     this->ancho=ancho;
     this->alto=alto;
-    sprite=new QPixmap(":/imagenes/SpritesaUsar.png");
+    sprite= new QPixmap(":/Imagenes/SpritesaUsar.png");
     setPos(posx,posy);
 }
+
+
 
 QRectF Nivel::boundingRect() const
 {
@@ -36,6 +40,7 @@ void Nivel::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
 
 void Nivel::cambiaEnergia()
 {
+
     if(x<600){
         x+=ancho;
         update();
@@ -44,4 +49,7 @@ void Nivel::cambiaEnergia()
         x=0;
         update();
     }
+
 }
+
+
