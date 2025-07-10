@@ -1,22 +1,17 @@
 #ifndef PERSONAJES_H
 #define PERSONAJES_H
 
-#include <QObject>
-#include <QGraphicsItem>
-#include <QPainter>
-#include <QPixmap>
+#include "nivel.h"
 
-class Personajes : public QObject, public QGraphicsItem
+class Personajes :public Nivel
 {
     Q_OBJECT
-    Q_INTERFACES(QGraphicsItem)
 public:
     explicit Personajes(QObject *parent = nullptr);
     Personajes(short x,short y,short posx, short posy,short ancho, short alto,short movimiento);
-    short x,y,posx,posy,ancho,alto,vel,energia,movimiento;
-    QPixmap *sprite;
-    QRectF boundingRect()const;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    short vel,movimiento;
+    QRectF boundingRect()const override;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)override;
     void moverUp();
     void moverDown();
     void moverRight();

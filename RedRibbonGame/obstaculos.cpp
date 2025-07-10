@@ -32,16 +32,6 @@ void Obstaculos::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
     painter->drawPixmap(dibuja,*sprite,posicionSprite);
 }
 
-short Obstaculos::getterPosY()
-{
-    return posy;
-}
-
-short Obstaculos::getterPosX()
-{
-    return posx;
-}
-
 void Obstaculos::moverUp()
 {
     posy=posy-vel;

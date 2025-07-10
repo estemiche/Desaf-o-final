@@ -1,7 +1,7 @@
 #include "personajes.h"
 
 Personajes::Personajes(QObject *parent)
-    : QObject{parent}
+    : Nivel(parent)
 {
     x=0;
     y=0;
@@ -17,13 +17,9 @@ Personajes::Personajes(QObject *parent)
 }
 
 Personajes::Personajes(short x, short y, short posx, short posy, short ancho, short alto,short movimiento)
+    :Nivel(x,y,posx,posy,ancho,alto)
 {
-    this->x=x;
-    this->y=y;
-    this->posx=posx;
-    this->posy=posy;
-    this->ancho=ancho;
-    this->alto=alto;
+
     vel=2;
     energia=100;
     this->movimiento=movimiento;

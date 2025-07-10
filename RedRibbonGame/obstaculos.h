@@ -19,8 +19,6 @@ public:
     QPixmap *sprite;
     QRectF boundingRect()const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-    short getterPosY();
-    short getterPosX();
     void moverUp();
     void moverDown();
     void moverRight();

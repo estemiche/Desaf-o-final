@@ -1,0 +1,4 @@
+Dificultad del juego
+La dificultad del juego se ha implementado al darle a los soldados movimiento y reducir el tiempo del timer
+en los disparos de los personajes (torretas y soldados). Se ha aumentado la dificultad del juego al implementar 
+la destrucción obligatoria de todos los personajes (puertas, soldados, torretas), para poder pasar el nivel. 

@@ -8,12 +8,12 @@ Muros::Muros(short x, short y, short ancho, short alto)
 {
     this->x=0;
     this->y=266;
-    this->posx=0;
-    this->posy=0;
+    this->posx=x;
+    this->posy=y;
     this->ancho=ancho;
     this->alto=alto;
     sprite= new QPixmap(":/Imagenes/SpritesaUsar.png");
-    setPos(x,y);
+    setPos(posx,posy);
 }
 
 QRectF Muros::boundingRect() const

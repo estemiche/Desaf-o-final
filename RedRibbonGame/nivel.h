@@ -17,7 +17,7 @@ public:
     explicit Nivel(QObject *parent = nullptr);
     Nivel(short x,short y,short posx,short posy,short ancho,short alto);
     short x,y,posx,posy,ancho,alto;
-    short energia,vida,damage;
+    short energia,vida;
     QTimer *timer;
     QPixmap *sprite;
     QRectF boundingRect()const;

@@ -4,7 +4,6 @@ Nivel::Nivel(QObject *parent)
     : QObject{parent}
 {
     energia=100;
-    damage=0;
     x=0;
     y=0;
     ancho=100;
