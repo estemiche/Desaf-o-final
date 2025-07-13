@@ -26,7 +26,7 @@ MainWindow::MainWindow(QWidget *parent)
     cargarCorazones("Nivel.txt");
     gokuInvulnerable=false;
 
-    }
+}
 
 
 
@@ -178,19 +178,19 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
             energia();
         }
     }
-        else if(event->key()==Qt::Key_Z){
-            goku->sacarPoderLeft();
-             energiaSoldados();
-        }
-        else if(event->key()==Qt::Key_X){
-            goku->restablecerGoku();
-            goku->sacarPoderRight();
-            energiaSoldados();
-        }
-        else if(event->key()==Qt::Key_Q){
-            goku->sacarPoderUp();
-            energiaSoldados();
-        }
+    else if(event->key()==Qt::Key_Z){
+        goku->sacarPoderLeft();
+        energiaSoldados();
+    }
+    else if(event->key()==Qt::Key_X){
+        goku->restablecerGoku();
+        goku->sacarPoderRight();
+        energiaSoldados();
+    }
+    else if(event->key()==Qt::Key_Q){
+        goku->sacarPoderUp();
+        energiaSoldados();
+    }
 
 }
 
@@ -299,12 +299,12 @@ void MainWindow::disparo()
             }
             break;
         }
-            default:
+        default:
             break;
         }
-            if(evaluarColisionGokuObstaculos()){
-                energia();
-            }
+        if(evaluarColisionGokuObstaculos()){
+            energia();
+        }
     }
 }
 
@@ -319,9 +319,9 @@ void MainWindow::animarSoldados()
         case 1:{
             if(pers->x==0 && pers->y==85 ){
                 pers->moverRightSold();
-                }
+            }
             if(pers->posx>300){
-                    pers->x=27;
+                pers->x=27;
             }
             if(pers->x==27){
                 pers->moverLeftSold();
@@ -333,7 +333,7 @@ void MainWindow::animarSoldados()
                 pers->moverRightSold();
             }
 
-             break;
+            break;
         }
         case 2:{
             if(pers->x==28 && pers->y==85 ){
@@ -504,7 +504,7 @@ void MainWindow::energia()
         corazones.pop_back();
         goku->energia=100;
 
-        }
+    }
     if(corazones.empty()){
         scene1->setBackgroundBrush(Qt::red);
         scene1->addText("GAMEOVER");
@@ -529,18 +529,19 @@ void MainWindow::energiaSoldados()
         if(personajes[e]->energia<=0){
             Personajes *soldadoMuerto=personajes[e];
 
-        for (int i = 0; i<obstaculos.count();++i) {
-            if(obstaculos[i]->soldado==soldadoMuerto){
-                scene1->removeItem(obstaculos[i]);
-                delete obstaculos[i];
-                obstaculos.removeAt(i);
-                i--;
+            for (int i = 0; i<obstaculos.count();++i) {
+                if(obstaculos[i]->soldado==soldadoMuerto){
+                    scene1->removeItem(obstaculos[i]);
+                    delete obstaculos[i];
+                    obstaculos.removeAt(i);
+                    i--;
+                }
             }
-        }
-        scene1->removeItem(soldadoMuerto);
-        delete soldadoMuerto;
-        personajes.removeAt(e);
-        e--;
+            scene1->removeItem(soldadoMuerto);
+            delete soldadoMuerto;
+            personajes.removeAt(e);
+            nivel2();
+            e--;
         }
 
         for (int i = 0; i < obstaculos.count(); ++i) {
@@ -552,6 +553,32 @@ void MainWindow::energiaSoldados()
         }
 
     }
+}
+
+void MainWindow::nivel2()
+{
+    scene1->clear();
+    muros.clear();
+    obstaculos.clear();
+    personajes.clear();
+    corazones.clear();
+
+    scene1->setSceneRect(0,0,900,750);
+    scene1->setBackgroundBrush(Qt::black);
+
+    goku=new Personajes(770,550);
+    niveles = new Nivel;
+    scene1->addItem(niveles);
+    scene1->addItem(goku);
+    goku->setPos(770,550);
+    niveles->setPos(880,80);
+
+    cargarMuros("Muros2.txt");
+    cargarCorazones("Nivel2.txt");
+    cargarObjetos("Obstaculos2.txt");
+    cargarPersonajes("Personajes2.txt");
+
+    gokuInvulnerable=false;
 }
 
 

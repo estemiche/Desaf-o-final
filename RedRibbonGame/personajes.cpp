@@ -12,7 +12,7 @@ Personajes::Personajes(QObject *parent)
     vel=3;
     energia=100;
     sprite=new QPixmap(":/Imagenes/SpritesaUsar.png");
-    setPos(posx,posy);
+    setPos(430,630);
 
 }
 
@@ -25,6 +25,20 @@ Personajes::Personajes(short x, short y, short posx, short posy, short ancho, sh
     this->movimiento=movimiento;
     sprite=new QPixmap(":/Imagenes/SpritesaUsar.png");
     setPos(posx,posy);
+}
+
+Personajes::Personajes(short posx, short posy)
+{
+    x=0;
+    y=0;
+    this->posx=posx;
+    this->posy=posy;
+    ancho=25;
+    alto=41;
+    vel=3;
+    energia=100;
+    sprite=new QPixmap(":/Imagenes/SpritesaUsar.png");
+
 }
 
 QRectF Personajes::boundingRect() const

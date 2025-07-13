@@ -30,7 +30,7 @@ public:
 private slots:
     void keyPressEvent(QKeyEvent *event);
     void disparo();
-   void animarSoldados();
+    void animarSoldados();
 private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene1;
@@ -53,6 +53,7 @@ private:
     bool evaluarColisionGokuPersonajes();
     void energia();
     void energiaSoldados();
+    void nivel2();
 
 
 };

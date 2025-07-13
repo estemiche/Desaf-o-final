@@ -9,6 +9,7 @@ class Personajes :public Nivel
 public:
     explicit Personajes(QObject *parent = nullptr);
     Personajes(short x,short y,short posx, short posy,short ancho, short alto,short movimiento);
+    Personajes(short posx,short posy);
     short vel,movimiento;
     QRectF boundingRect()const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)override;
