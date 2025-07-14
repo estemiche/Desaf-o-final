@@ -41,6 +41,21 @@ Personajes::Personajes(short posx, short posy)
 
 }
 
+Personajes::Personajes(short x, short y, short posx, short posy)
+{
+    this->x=x;
+    this->y=y;
+    this->posx=posx;
+    this->posy=posy;
+    ancho=33;
+    alto=50;
+    vel=50;
+    energia=100;
+    movimiento=rand()%8;
+    setPos(posx,posy);
+    sprite=new QPixmap(":/Imagenes/SpritesaUsar.png");
+}
+
 QRectF Personajes::boundingRect() const
 {
     return QRectF(0,0,ancho,alto);
@@ -53,17 +68,15 @@ void Personajes::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
     painter->drawPixmap(dibuja,*sprite,posicionSprite);
 }
 
-void Personajes::moverUp()
+void Personajes::moverUpGoku()
 {
     x=0;
     posy=posy-vel;
     setPos(posx,posy);
 
-
-
 }
 
-void Personajes::moverDown()
+void Personajes::moverDownGoku()
 {
     posy=posy+vel;
     setPos(posx,posy);
@@ -76,7 +89,7 @@ void Personajes::moverDown()
 
 }
 
-void Personajes::moverRight()
+void Personajes::moverRightGoku()
 {
     posx=posx+vel;
     setPos(posx,posy);
@@ -87,7 +100,7 @@ void Personajes::moverRight()
     update();
 }
 
-void Personajes::moverLeft()
+void Personajes::moverLeftGoku()
 {
     posx=posx-vel;
     setPos(posx,posy);
@@ -96,6 +109,15 @@ void Personajes::moverLeft()
         x=ancho*6;
     }
     update();
+}
+
+void Personajes::actualizaPuerta()
+{
+    x+=35;
+    y=130;
+    if(x>100){
+        x=70;
+    }
 }
 
 void Personajes::sacarPoderUp()
@@ -129,25 +151,25 @@ void Personajes::restablecerGoku()
     ancho=25;
 }
 
-void Personajes::moverUpSold()
+void Personajes::moverUp()
 {
     posy=posy-vel;
     setPos(posx,posy);
 }
 
-void Personajes::moverDownSold()
+void Personajes::moverDown()
 {
     posy=posy+vel;
     setPos(posx,posy);
 }
 
-void Personajes::moverRightSold()
+void Personajes::moverRight()
 {
     posx=posx+vel;
     setPos(posx,posy);
 }
 
-void Personajes::moverLeftSold()
+void Personajes::moverLeft()
 {
     posx=posx-vel;
     setPos(posx,posy);

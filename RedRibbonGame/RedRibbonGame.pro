@@ -40,5 +40,6 @@ DISTFILES += \
     build/Desktop_Qt_6_7_3_MinGW_64_bit-Debug/Nivel1.txt \
     build/Desktop_Qt_6_7_3_MinGW_64_bit-Debug/Nivel2.txt \
     build/Desktop_Qt_6_7_3_MinGW_64_bit-Debug/Obstaculos.txt \
+    build/Desktop_Qt_6_7_3_MinGW_64_bit-Debug/Obstaculos2.txt \
     build/Desktop_Qt_6_7_3_MinGW_64_bit-Debug/Personajes.txt \
     build/Desktop_Qt_6_7_3_MinGW_64_bit-Debug/Personajes2.txt

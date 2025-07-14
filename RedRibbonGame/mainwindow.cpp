@@ -17,6 +17,10 @@ MainWindow::MainWindow(QWidget *parent)
     connect(timer1,&QTimer::timeout,this,&MainWindow::animarSoldados);
     niveles=new Nivel;
     goku=new Personajes;
+    puerta1= new Personajes(0,130,416,355);
+    puerta2= new Personajes(0,130,432,-5);
+    scene1->addItem(puerta1);
+    scene1->addItem(puerta2);
     scene1->addItem(niveles);
     niveles->setPos(720,80);
     scene1->addItem(goku);
@@ -133,10 +137,10 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 {
     if(event->key()==Qt::Key_W){
         goku->restablecerGoku();
-        goku->moverUp();
+        goku->moverUpGoku();
 
         if(evaluarColisionGokuMuros()){
-            goku->moverDown();
+            goku->moverDownGoku();
         }
         if(evaluarColisionGokuObstaculos()){
             energia();
@@ -145,9 +149,9 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     }
     else if(event->key()==Qt::Key_S){
         goku->restablecerGoku();
-        goku->moverDown();
+        goku->moverDownGoku();
         if(evaluarColisionGokuMuros()){
-            goku->moverUp();
+            goku->moverUpGoku();
 
         }
         if(evaluarColisionGokuObstaculos()){
@@ -158,10 +162,10 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     }
     else if(event->key()==Qt::Key_D){
         goku->restablecerGoku();
-        goku->moverRight();
+        goku->moverRightGoku();
 
         if(evaluarColisionGokuMuros()){
-            goku->moverLeft();
+            goku->moverLeftGoku();
 
         }
         if(evaluarColisionGokuObstaculos()){
@@ -170,9 +174,9 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     }
     else if(event->key()==Qt::Key_A){
         goku->restablecerGoku();
-        goku->moverLeft();
+        goku->moverLeftGoku();
         if(evaluarColisionGokuMuros()){
-            goku->moverRight();
+            goku->moverRightGoku();
         }
         if(evaluarColisionGokuObstaculos()){
             energia();
@@ -190,6 +194,12 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     else if(event->key()==Qt::Key_Q){
         goku->sacarPoderUp();
         energiaSoldados();
+    }
+    else if(event->key()==Qt::Key_E){
+        destruPuerta();
+    }
+    else if(event->key()==Qt::Key_T){
+        nivel2();
     }
 
 }
@@ -238,7 +248,7 @@ void MainWindow::disparo()
         }
         case 4:{
             obst->moverRight();
-            if(obst->posx>800){
+            if(obst->posx>700){
                 obst->posx=320;
 
             }
@@ -299,6 +309,56 @@ void MainWindow::disparo()
             }
             break;
         }
+        case 12:{
+            obst->moverRight();
+            if(obst->posx>680){
+                obst->posx=500;
+            }
+            break;
+        }
+        case 13:{
+            obst->moverRight();
+            if(obst->posx>490){
+                obst->posx=300;
+            }
+            break;
+        }
+        case 14:{
+            obst->moverRight();
+            obst->moverDown();
+            if(obst->posx>350){
+                obst->posx=80;
+                obst->posy=100;
+            }
+            break;
+        }
+        case 15:{
+            obst->moverLeft();
+            obst->moverDown();
+            if(obst->posx<400){
+                obst->posx=760;
+                obst->posy=100;
+            }
+            break;
+        }
+        case 16:{
+            obst->moverRight();
+            obst->moverUp();
+            if(obst->posx>350){
+                obst->posx=100;
+                obst->posy=440;
+            }
+            break;
+        }
+        case 17:{
+            obst->moverLeft();
+            obst->moverUp();
+            if(obst->posx<500){
+                obst->posx=760;
+                obst->posy=365;
+            }
+            break;
+        }
         default:
             break;
         }
@@ -318,166 +378,185 @@ void MainWindow::animarSoldados()
         }
         case 1:{
             if(pers->x==0 && pers->y==85 ){
-                pers->moverRightSold();
+                pers->moverRight();
             }
             if(pers->posx>300){
                 pers->x=27;
             }
             if(pers->x==27){
-                pers->moverLeftSold();
+                pers->moverLeft();
             }
             if(pers->posx<100){
                 pers->x=0;
             }
             if(pers->x==0){
-                pers->moverRightSold();
+                pers->moverRight();
             }
 
             break;
         }
         case 2:{
             if(pers->x==28 && pers->y==85 ){
-                pers->moverLeftSold();
+                pers->moverLeft();
             }
             if(pers->posx<580){
                 pers->x=0;
             }
             if(pers->x==0){
-                pers->moverRightSold();
+                pers->moverRight();
             }
-            if(pers->posx>700){
+            if(pers->posx>730){
                 pers->x=28;
             }
             if(pers->x==28){
-                pers->moverLeftSold();
+                pers->moverLeft();
             }
             break;
         }
         case 3:{
             if(pers->x==53 && pers->y==85 ){
-                pers->moverRightSold();
+                pers->moverRight();
             }
             if(pers->posx>90){
                 pers->x=81;
             }
             if(pers->x==81){
-                pers->moverLeftSold();
+                pers->moverLeft();
             }
             if(pers->posx<50){
                 pers->x=53;
             }
             if(pers->x==53){
-                pers->moverRightSold();
+                pers->moverRight();
             }
             break;
         }
         case 4:{
             if(pers->x==81 && pers->y==85 ){
-                pers->moverLeftSold();
+                pers->moverLeft();
             }
             if(pers->posx<780){
                 pers->x=53;
             }
             if(pers->x==53){
-                pers->moverRightSold();
+                pers->moverRight();
             }
             if(pers->posx>820){
                 pers->x=81;
             }
             if(pers->x==81){
-                pers->moverLeftSold();
+                pers->moverLeft();
             }
             break;
         }
 
         case 5:{
             if(pers->x==0 && pers->y==85 ){
-                pers->moverRightSold();
+                pers->moverRight();
             }
             if(pers->posx>260){
                 pers->x=28;
             }
             if(pers->x==28){
-                pers->moverLeftSold();
+                pers->moverLeft();
             }
             if(pers->posx<180){
                 pers->x=0;
             }
             if(pers->x==0){
-                pers->moverRightSold();
+                pers->moverRight();
             }
             break;
         }
 
         case 6:{
             if(pers->x==28 && pers->y==85 ){
-                pers->moverLeftSold();
+                pers->moverLeft();
             }
             if(pers->posx<580){
                 pers->x=0;
             }
             if(pers->x==0){
-                pers->moverRightSold();
+                pers->moverRight();
             }
-            if(pers->posx>630){
+            if(pers->posx>750){
                 pers->x=28;
             }
             if(pers->x==28){
-                pers->moverLeftSold();
+                pers->moverLeft();
             }
             break;
         }
 
         case 7:{
             if(pers->x==53 && pers->y==85 ){
-                pers->moverRightSold();
+                pers->moverRight();
             }
             if(pers->posx>380){
                 pers->x=81;
             }
             if(pers->x==81){
-                pers->moverLeftSold();
+                pers->moverLeft();
             }
             if(pers->posx<320){
                 pers->x=53;
             }
             if(pers->x==53){
-                pers->moverRightSold();
+                pers->moverRight();
             }
             break;
         }
         case 8:{
             if(pers->x==81 && pers->y==85 ){
-                pers->moverLeftSold();
+                pers->moverLeft();
             }
             if(pers->posx<500){
                 pers->x=53;
             }
             if(pers->x==53){
-                pers->moverRightSold();
+                pers->moverRight();
             }
             if(pers->posx>560){
                 pers->x=81;
             }
             if(pers->x==81){
-                pers->moverLeftSold();
+                pers->moverLeft();
             }
             break;
         }
         case 9:{
-            if(pers->energia==100 && evaluarColisionGokuPersonajes()){
+            if(pers->x==0 && pers->y==85){
+                pers->moverRight();
+            }
+            if(pers->posx>710){
+                pers->x=27;
+            }
+            if(pers->x==27){
+                pers->moverLeft();
+            }
+            if(pers->posx<510){
                 pers->x=0;
-                pers->y=130;
-                goku->moverDown();
             }
-            if(pers->energia=50 && evaluarColisionGokuPersonajes()){
-                pers->x=34;
-                pers->y=130;
-                goku->moverDown();
+            if(pers->x==0){
+                pers->moverRight();
             }
-            if(pers->energia==0 && evaluarColisionGokuPersonajes()){
-                pers->x=67;
-                pers->y=130;
+            break;
+        }
+        case 10:{
+            if(pers->x==28 && pers->y==85){
+                pers->moverLeft();
+            }
+            if(pers->posx>220){
+                pers->x=0;
+            }
+            if(pers->x==0){
+                pers->moverRight();
+            }
+            if(pers->posx<520){
+                pers->x=20;
+            }
+            if(pers->x==20){
+                pers->moverLeft();
             }
             break;
         }
@@ -489,8 +568,77 @@ void MainWindow::animarSoldados()
     }
 }
 
-
-
+void MainWindow::moverBlack()
+{
+    if(black->posx<=60){
+        black->moverRight();
+    }
+    else if(black->posx>=790){
+        black->moverLeft();
+    }
+    else if(black->posy<=80){
+        black->moverDown();
+    }
+    else if(black->posy>=410){
+        black->moverUp();
+    }
+    switch(black->movimiento=rand()%8){
+    case 0:{
+        if(black->x==0 && black->y==181){
+            black->moverDown();
+            black->moverLeft();
+        }
+        break;
+    }
+    case 1:{
+        if(black->x==0 && black->y==181){
+            black->moverDown();
+            black->moverRight();
+        }
+        break;
+    }
+    case 2:{
+        if(black->x==0 && black->y==181){
+            black->moverUp();
+            black->moverLeft();
+        }
+        break;
+    }
+    case 3:{
+        if(black->x==0 && black->y==181){
+            black->moverUp();
+            black->moverRight();
+        }
+        break;
+    }
+    case 4:{
+        if(black->x==0 && black->y==181){
+            black->moverUp();
+        }
+        break;
+    }
+    case 5:{
+        if(black->x==0 && black->y==181){
+            black->moverDown();
+        }
+        break;
+    }
+    case 6:{
+        if(black->x==0 && black->y==181){
+            black->moverLeft();
+        }
+        break;
+    }
+    case 7:{
+        if(black->x==0 && black->y==181){
+            black->moverRight();
+        }
+        break;
+    }
+    default:
+        break;
+    }
+}
 
 
 void MainWindow::energia()
@@ -540,18 +688,38 @@ void MainWindow::energiaSoldados()
             scene1->removeItem(soldadoMuerto);
             delete soldadoMuerto;
             personajes.removeAt(e);
-            nivel2();
             e--;
         }
 
-        for (int i = 0; i < obstaculos.count(); ++i) {
-            if(goku->collidesWithItem(obstaculos[i])){
-                scene1->removeItem(obstaculos[i]);
-                obstaculos.removeAt(i);
-            }
+    }
+}
 
-        }
+void MainWindow::energiaPuertas()
+{
+    if(goku->collidesWithItem(puerta1)){
+        puerta1->energia-=5;
+    }
+    if(goku->collidesWithItem(puerta2)){
+        puerta2->energia-=5;
+    }
+    if(puerta1->energia==0){
+    scene1->removeItem(puerta1);
+    }
+    else if(puerta2->energia==0){
+        scene1->removeItem(puerta2);
+    }
+    if(personajes.isEmpty()&&puerta1->energia==0&&puerta2->energia==0){
+        nivel2();
+    }
+}
 
+void MainWindow::energiaBlack()
+{
+    if(goku->collidesWithItem(black)){
+        black->energia-=3;
+    }
+    if(black->energia<=100){
+        scene1->removeItem(black);
     }
 }
 
@@ -561,11 +729,17 @@ void MainWindow::nivel2()
     muros.clear();
     obstaculos.clear();
     personajes.clear();
+
     corazones.clear();
 
     scene1->setSceneRect(0,0,900,750);
-    scene1->setBackgroundBrush(Qt::black);
+    scene1->setBackgroundBrush(Qt::darkCyan);
 
+    black=new Personajes(0,181,500,200);
+    scene1->addItem(black);
+    timer2=new QTimer();
+    timer2->start(50);
+    connect(timer2,&QTimer::timeout,this,&MainWindow::moverBlack);
     goku=new Personajes(770,550);
     niveles = new Nivel;
     scene1->addItem(niveles);
@@ -575,11 +749,27 @@ void MainWindow::nivel2()
 
     cargarMuros("Muros2.txt");
     cargarCorazones("Nivel2.txt");
-    cargarObjetos("Obstaculos2.txt");
     cargarPersonajes("Personajes2.txt");
+    cargarObjetos("Obstaculos2.txt");
 
     gokuInvulnerable=false;
 }
+
+void MainWindow::siguienteNivel()
+{
+    if(personajes.isEmpty()){
+        nivel2();
+    }
+}
+
+void MainWindow::destruPuerta()
+{
+    if(goku->collidesWithItem(puerta1)){
+        puerta1->actualizaPuerta();
+        energiaPuertas();
+    }
+}
+
 
 
 

@@ -8,6 +8,7 @@
 #include <iostream>
 #include <QKeyEvent>
 #include <QTimer>
+#include <QtGlobal>
 #include "muros.h"
 #include "obstaculos.h"
 #include "personajes.h"
@@ -31,6 +32,7 @@ private slots:
     void keyPressEvent(QKeyEvent *event);
     void disparo();
     void animarSoldados();
+    void moverBlack();
 private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene1;
@@ -38,12 +40,16 @@ private:
     bool gokuInvulnerable;
     QTimer *timer;
     QTimer *timer1;
+    QTimer *timer2;
     QList <Muros*> muros;
     QList <Obstaculos*>obstaculos;
     QList <Personajes*>personajes;
     QList <Nivel*>corazones;
     Nivel *niveles;
     Personajes *goku;
+    Personajes *puerta1;
+    Personajes *puerta2;
+    Personajes *black;
     void cargarMuros(const QString& nombreArchivo);
     void cargarObjetos(const QString& nombreArchivo);
     void cargarPersonajes(const QString& nombreArchivo);
@@ -53,7 +59,11 @@ private:
     bool evaluarColisionGokuPersonajes();
     void energia();
     void energiaSoldados();
+    void energiaPuertas();
+    void energiaBlack();
     void nivel2();
+    void siguienteNivel();
+    void destruPuerta();
 
 
 };
