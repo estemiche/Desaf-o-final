@@ -14,6 +14,7 @@
 #include "personajes.h"
 #include "nivel.h"
 
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -36,8 +37,9 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene1;
-    short x,y,ancho,alto;
+    short x,y,ancho,alto,nivelActual;
     bool gokuInvulnerable;
+    QGraphicsTextItem *texto;
     QTimer *timer;
     QTimer *timer1;
     QTimer *timer2;
@@ -62,7 +64,7 @@ private:
     void energiaPuertas();
     void energiaBlack();
     void nivel2();
-    void siguienteNivel();
+
     void destruPuerta();
 
 

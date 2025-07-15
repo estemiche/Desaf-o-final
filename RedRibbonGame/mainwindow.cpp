@@ -6,6 +6,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    nivelActual=1;
     scene1= new QGraphicsScene(0,0,900,750);
     ui->graphicsView->setScene(scene1);
     scene1->setBackgroundBrush(Qt::black);
@@ -185,18 +186,21 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     else if(event->key()==Qt::Key_Z){
         goku->sacarPoderLeft();
         energiaSoldados();
+        destruPuerta();
+        energiaBlack();
     }
     else if(event->key()==Qt::Key_X){
         goku->restablecerGoku();
         goku->sacarPoderRight();
         energiaSoldados();
+        destruPuerta();
+        energiaBlack();
     }
     else if(event->key()==Qt::Key_Q){
         goku->sacarPoderUp();
         energiaSoldados();
-    }
-    else if(event->key()==Qt::Key_E){
         destruPuerta();
+        energiaBlack();
     }
     else if(event->key()==Qt::Key_T){
         nivel2();
@@ -279,7 +283,7 @@ void MainWindow::disparo()
         }
         case 8:{
             obst->moverRight();
-            if(obst->posx>800){
+            if(obst->posx>750){
                 obst->posx=230;
             }
             break;
@@ -546,16 +550,16 @@ void MainWindow::animarSoldados()
             if(pers->x==28 && pers->y==85){
                 pers->moverLeft();
             }
-            if(pers->posx>220){
+            if(pers->posx<220){
                 pers->x=0;
             }
             if(pers->x==0){
                 pers->moverRight();
             }
-            if(pers->posx<520){
-                pers->x=20;
+            if(pers->posx>520){
+                pers->x=28;
             }
-            if(pers->x==20){
+            if(pers->x==28){
                 pers->moverLeft();
             }
             break;
@@ -570,6 +574,7 @@ void MainWindow::animarSoldados()
 
 void MainWindow::moverBlack()
 {
+    if(!black)return;
     if(black->posx<=60){
         black->moverRight();
     }
@@ -643,6 +648,7 @@ void MainWindow::moverBlack()
 
 void MainWindow::energia()
 {
+    if(!niveles)return;
     if(gokuInvulnerable) return;
     goku->energia-=20;
     goku->setOpacity(1);
@@ -655,9 +661,14 @@ void MainWindow::energia()
     }
     if(corazones.empty()){
         scene1->setBackgroundBrush(Qt::red);
-        scene1->addText("GAMEOVER");
+        texto = scene1->addText("GAMEOVER");
+        texto->setDefaultTextColor(Qt::black);
+        texto->setFont(QFont("Arial",10, QFont::Bold));
+        texto->setScale(5);
+        texto->setPos(250,400);
         scene1->removeItem(niveles);
         delete niveles;
+        niveles=nullptr;
     }
     gokuInvulnerable=true;
     goku->setOpacity(0.5);
@@ -696,35 +707,51 @@ void MainWindow::energiaSoldados()
 
 void MainWindow::energiaPuertas()
 {
-    if(goku->collidesWithItem(puerta1)){
+    if(puerta1 && goku->collidesWithItem(puerta1)){
         puerta1->energia-=5;
+        goku->moverDownGoku();
     }
-    if(goku->collidesWithItem(puerta2)){
+    if(puerta2 && goku->collidesWithItem(puerta2)){
         puerta2->energia-=5;
+        goku->moverDownGoku();
     }
-    if(puerta1->energia==0){
+    if(puerta1 && puerta1->energia==0){
     scene1->removeItem(puerta1);
+        delete puerta1;
+        puerta1=nullptr;
     }
-    else if(puerta2->energia==0){
+    else if(puerta2 && puerta2->energia==0){
         scene1->removeItem(puerta2);
+        delete puerta2;
+        puerta2=nullptr;
     }
-    if(personajes.isEmpty()&&puerta1->energia==0&&puerta2->energia==0){
+    if(personajes.isEmpty() && (!puerta1 || puerta1->energia==0) && (!puerta2 || puerta2->energia==0)){
         nivel2();
     }
 }
 
 void MainWindow::energiaBlack()
 {
+    if(nivelActual!=2 || !black)return;
     if(goku->collidesWithItem(black)){
-        black->energia-=3;
+        black->energia-=1;
     }
-    if(black->energia<=100){
-        scene1->removeItem(black);
+    if(black->energia<=0 && black){
+        if(timer2){
+            timer2->stop();
+            delete timer2;
+            timer2=nullptr;
+        }
+
+    scene1->removeItem(black);
+    delete black;
+    black=nullptr;
     }
 }
 
 void MainWindow::nivel2()
 {
+    nivelActual=2;
     scene1->clear();
     muros.clear();
     obstaculos.clear();
@@ -755,17 +782,15 @@ void MainWindow::nivel2()
     gokuInvulnerable=false;
 }
 
-void MainWindow::siguienteNivel()
-{
-    if(personajes.isEmpty()){
-        nivel2();
-    }
-}
-
 void MainWindow::destruPuerta()
 {
-    if(goku->collidesWithItem(puerta1)){
+    if(nivelActual!=1)return;
+    if(puerta1 && goku->collidesWithItem(puerta1)){
         puerta1->actualizaPuerta();
+        energiaPuertas();
+    }
+    if(puerta2 && goku->collidesWithItem(puerta2)){
+        puerta2->actualizaPuerta();
         energiaPuertas();
     }
 }

@@ -49,7 +49,7 @@ Personajes::Personajes(short x, short y, short posx, short posy)
     this->posy=posy;
     ancho=33;
     alto=50;
-    vel=50;
+    vel=5;
     energia=100;
     movimiento=rand()%8;
     setPos(posx,posy);
