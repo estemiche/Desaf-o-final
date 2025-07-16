@@ -49,6 +49,7 @@ MainWindow::MainWindow(QWidget *parent)
     cargarObjetos("Obstaculos.txt");
     cargarCorazones("Nivel.txt");
     gokuInvulnerable=false;
+    juegoActivo=true;
 
 }
 
@@ -155,6 +156,7 @@ bool MainWindow::evaluarColisionGokuPersonajes()
 
 void MainWindow::keyPressEvent(QKeyEvent *event)
 {
+    if(!juegoActivo)return;
     if(event->key()==Qt::Key_W){
         goku->restablecerGoku();
         goku->moverUpGoku();
@@ -713,6 +715,9 @@ void MainWindow::energia()
 
     }
     if(corazones.empty()){
+        juegoActivo=false;
+        timer1->stop();
+        timer->stop();
         scene1->setBackgroundBrush(Qt::red);
         texto = scene1->addText("GAMEOVER");
         texto->setDefaultTextColor(Qt::black);

@@ -41,6 +41,7 @@ private:
     QGraphicsScene *scene1;
     short x,y,ancho,alto,nivelActual;
     bool gokuInvulnerable;
+    bool juegoActivo;
     QGraphicsTextItem *texto;
     QMediaPlayer *player;
     QAudioOutput *audioOutput;
