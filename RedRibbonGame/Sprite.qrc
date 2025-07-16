@@ -2,5 +2,7 @@
     <qresource prefix="/">
         <file>Imagenes/SpritesaUsar.png</file>
         <file>Imagenes/SpritesaUsar1.png</file>
+        <file>Audio/Dragon-Ball-Soundtrack.wav</file>
+        <file>Audio/GolpeGoku.wav</file>
     </qresource>
 </RCC>

@@ -25,6 +25,25 @@ MainWindow::MainWindow(QWidget *parent)
     scene1->addItem(niveles);
     niveles->setPos(720,80);
     scene1->addItem(goku);
+    audioOutput=new QAudioOutput(this);
+    player=new QMediaPlayer(this);
+    player->setAudioOutput(audioOutput);
+    audioOutput->setVolume(0.7);
+    player->setSource(QUrl("qrc:/Audio/GolpeGoku.wav"));
+    audioFondo=new QAudioOutput(this);
+    audioFondo->setVolume(0.5);
+    musicaFondo=new QMediaPlayer(this);
+    musicaFondo->setAudioOutput(audioFondo);
+    musicaFondo->setSource(QUrl("qrc:/Audio/Dragon-Ball-Soundtrack.wav"));
+    connect(musicaFondo, &QMediaPlayer::mediaStatusChanged, this, [=](QMediaPlayer::MediaStatus status){
+        if(status == QMediaPlayer::EndOfMedia){
+           musicaFondo->setPosition(0);
+           musicaFondo->play();
+        }
+    });
+    musicaFondo->play();
+
+
     cargarMuros("Nivel1.txt");
     cargarPersonajes("Personajes.txt");
     cargarObjetos("Obstaculos.txt");
@@ -139,6 +158,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     if(event->key()==Qt::Key_W){
         goku->restablecerGoku();
         goku->moverUpGoku();
+        nivel3();
 
         if(evaluarColisionGokuMuros()){
             goku->moverDownGoku();
@@ -151,6 +171,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     else if(event->key()==Qt::Key_S){
         goku->restablecerGoku();
         goku->moverDownGoku();
+        nivel3();
         if(evaluarColisionGokuMuros()){
             goku->moverUpGoku();
 
@@ -164,6 +185,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     else if(event->key()==Qt::Key_D){
         goku->restablecerGoku();
         goku->moverRightGoku();
+        nivel3();
 
         if(evaluarColisionGokuMuros()){
             goku->moverLeftGoku();
@@ -176,6 +198,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     else if(event->key()==Qt::Key_A){
         goku->restablecerGoku();
         goku->moverLeftGoku();
+        nivel3();
         if(evaluarColisionGokuMuros()){
             goku->moverRightGoku();
         }
@@ -188,6 +211,8 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         energiaSoldados();
         destruPuerta();
         energiaBlack();
+        player->setPosition(0);
+        player->play();
     }
     else if(event->key()==Qt::Key_X){
         goku->restablecerGoku();
@@ -195,17 +220,17 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         energiaSoldados();
         destruPuerta();
         energiaBlack();
+        player->setPosition(0);
+        player->play();
     }
     else if(event->key()==Qt::Key_Q){
         goku->sacarPoderUp();
         energiaSoldados();
         destruPuerta();
         energiaBlack();
+        player->setPosition(0);
+        player->play();
     }
-    else if(event->key()==Qt::Key_T){
-        nivel2();
-    }
-
 }
 
 void MainWindow::disparo()
@@ -253,7 +278,7 @@ void MainWindow::disparo()
         case 4:{
             obst->moverRight();
             if(obst->posx>700){
-                obst->posx=320;
+                obst->posx=100;
 
             }
             break;
@@ -284,7 +309,7 @@ void MainWindow::disparo()
         case 8:{
             obst->moverRight();
             if(obst->posx>750){
-                obst->posx=230;
+                obst->posx=180;
             }
             break;
         }
@@ -330,7 +355,7 @@ void MainWindow::disparo()
         case 14:{
             obst->moverRight();
             obst->moverDown();
-            if(obst->posx>350){
+            if(obst->posx>420){
                 obst->posx=80;
                 obst->posy=100;
             }
@@ -348,7 +373,7 @@ void MainWindow::disparo()
         case 16:{
             obst->moverRight();
             obst->moverUp();
-            if(obst->posx>350){
+            if(obst->posx>440){
                 obst->posx=100;
                 obst->posy=440;
             }
@@ -360,6 +385,34 @@ void MainWindow::disparo()
             if(obst->posx<500){
                 obst->posx=760;
                 obst->posy=365;
+            }
+            break;
+        }
+        case 18:{
+            if(!obst->iniciado){
+                obst->calcularVelocidad();
+                obst->iniciado=true;
+            }
+            obst->calcularPosicion();
+            obst->actualizarVelocidad();
+            if(obst->posx>540){
+                obst->posx = 80;
+                obst->posy = 260;
+                obst->iniciado = false;
+            }
+            break;
+        }
+        case 19:{
+            if(!obst->iniciado){
+                obst->calcularVelocidad();
+                obst->iniciado=true;
+            }
+            obst->calcularPosicionInversa();
+            obst->actualizarVelocidad();
+            if(obst->posx<130){
+                obst->posx = 775;
+                obst->posy = 260;
+                obst->iniciado = false;
             }
             break;
         }
@@ -762,7 +815,7 @@ void MainWindow::nivel2()
     scene1->setSceneRect(0,0,900,750);
     scene1->setBackgroundBrush(Qt::darkCyan);
 
-    black=new Personajes(0,181,500,200);
+    black=new Personajes(0,181,400,200);
     scene1->addItem(black);
     timer2=new QTimer();
     timer2->start(50);
@@ -780,6 +833,19 @@ void MainWindow::nivel2()
     cargarObjetos("Obstaculos2.txt");
 
     gokuInvulnerable=false;
+}
+
+void MainWindow::nivel3()
+{
+    if(nivelActual !=2)return;
+    if(!personajes.isEmpty() || black)return;
+    if(personajes.isEmpty() && !black){
+        texto=scene1->addText("¡Felicidades, lo lograste!");
+        texto->setPos(55,120);
+        texto->setDefaultTextColor(Qt::darkMagenta);
+        texto->setScale(4);
+        texto->setFont(QFont("Arial", 10, QFont::Bold));
+    }
 }
 
 void MainWindow::destruPuerta()

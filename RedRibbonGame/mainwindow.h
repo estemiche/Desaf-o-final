@@ -9,6 +9,8 @@
 #include <QKeyEvent>
 #include <QTimer>
 #include <QtGlobal>
+#include <QMediaPlayer>
+#include <QAudioOutput>
 #include "muros.h"
 #include "obstaculos.h"
 #include "personajes.h"
@@ -40,6 +42,10 @@ private:
     short x,y,ancho,alto,nivelActual;
     bool gokuInvulnerable;
     QGraphicsTextItem *texto;
+    QMediaPlayer *player;
+    QAudioOutput *audioOutput;
+    QMediaPlayer *musicaFondo;
+    QAudioOutput *audioFondo;
     QTimer *timer;
     QTimer *timer1;
     QTimer *timer2;
@@ -64,6 +70,7 @@ private:
     void energiaPuertas();
     void energiaBlack();
     void nivel2();
+    void nivel3();
 
     void destruPuerta();
 
